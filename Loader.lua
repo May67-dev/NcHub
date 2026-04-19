@@ -1,5 +1,5 @@
--- Nc Hub Loader - Rayfield (Versión Mejorada)
-print("🔵 Nc Hub cargando...")
+-- Nc Hub Loader - Scripts Separados
+print("🔵 Nc Hub Loader iniciado...")
 
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
@@ -10,10 +10,11 @@ end
 
 _G.NcHubLoaded = true
 
+-- Crear ventana principal
 local Window = Rayfield:CreateWindow({
     Name = "Nc Hub",
     LoadingTitle = "Nc Hub",
-    LoadingSubtitle = "Cargando interfaz premium...",
+    LoadingSubtitle = "Cargando scripts por juego...",
     ConfigurationSaving = {
         Enabled = true,
         FolderName = "NcHubConfig",
@@ -24,47 +25,35 @@ local Window = Rayfield:CreateWindow({
 
 Rayfield:Notify({
     Title = "Nc Hub",
-    Content = "Bienvenido a Nc Hub\nTema Dark Moderno",
-    Duration = 5
+    Content = "Loader iniciado correctamente",
+    Duration = 4
 })
 
--- ==================== TABS ====================
+-- ==================== TABS BASE ====================
 local TabHome = Window:CreateTab("🏠 Home", 4483362458)
 local TabUniversal = Window:CreateTab("🌐 Universal", 4483362458)
 local TabGames = Window:CreateTab("🎮 Games", 4483362458)
-local TabMisc = Window:CreateTab("🔧 Misc", 4483362458)
 
--- Home
 TabHome:CreateParagraph({
     Title = "Nc Hub",
-    Content = "Script universal con Rayfield\nListo para personalizar a tu gusto."
+    Content = "Sistema de scripts separados por juego\nElige el juego en la pestaña Games"
 })
 
-TabHome:CreateButton({
-    Name = "Test Button",
-    Callback = function()
-        Rayfield:Notify({Title = "Nc Hub", Content = "¡Funciona correctamente!", Duration = 3})
-    end
-})
+-- ==================== DETECCIÓN DE JUEGO ====================
+local placeId = game.PlaceId
+local gameName = "Desconocido"
 
--- Universal (para futuras features)
-TabUniversal:CreateSection("Movement")
-TabUniversal:CreateButton({
-    Name = "Próximamente: Fly, Speed, Noclip...",
-    Callback = function()
-        Rayfield:Notify({Title = "Nc Hub", Content = "Sección en desarrollo", Duration = 4})
-    end
-})
+-- Aquí puedes añadir más juegos fácilmente
+if placeId == 2753915549 or placeId == 4442272183 or placeId == 7449423635 then
+    gameName = "Blox Fruits"
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/May67-dev/NcHub/main/Games/BloxFruits.lua"))()
+elseif placeId == 6284583030 then
+    gameName = "Pet Simulator 99"
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/May67-dev/NcHub/main/Games/PetSimulator.lua"))()
+else
+    gameName = "Juego no soportado todavía"
+end
 
-print("✅ Nc Hub cargado con Rayfield")
+TabGames:CreateSection("Juego Detectado: " .. gameName)
 
--- Ocultar automáticamente el botón "Show Rayfield"
-task.spawn(function()
-    task.wait(1.5)
-    for _, v in pairs(game:GetService("CoreGui"):GetDescendants()) do
-        if v:IsA("TextButton") and v.Text == "Show Rayfield" then
-            v.Visible = false
-            break
-        end
-    end
-end)
+print("✅ Nc Hub cargado | Juego detectado: " .. gameName)
