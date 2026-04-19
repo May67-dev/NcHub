@@ -1,4 +1,4 @@
--- Nc Hub Loader - Versión Estable para MM2
+-- Nc Hub Loader - Versión Simple y Estable
 print("🔵 Nc Hub Loader iniciado...")
 
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
@@ -9,8 +9,9 @@ if _G.NcHubLoaded then
 end
 
 _G.NcHubLoaded = true
-_G.NcHubRayfield = Rayfield   -- Guardamos Rayfield globalmente
-_G.NcHubWindow = Rayfield:CreateWindow({
+_G.NcHubRayfield = Rayfield
+
+local Window = Rayfield:CreateWindow({
     Name = "Nc Hub",
     LoadingTitle = "Nc Hub",
     LoadingSubtitle = "Cargando MM2...",
@@ -22,41 +23,35 @@ _G.NcHubWindow = Rayfield:CreateWindow({
     KeySystem = false
 })
 
-local Window = _G.NcHubWindow
+_G.NcHubWindow = Window
 
 Rayfield:Notify({
     Title = "Nc Hub",
-    Content = "Loader cargado correctamente",
+    Content = "Loader listo - MM2",
     Duration = 4
 })
 
+-- Tabs base
 local TabHome = Window:CreateTab("🏠 Home", 4483362458)
-local TabGames = Window:CreateTab("🎮 Games", 4483362458)
 
 TabHome:CreateParagraph({
-    Title = "Nc Hub - MM2",
-    Content = "Script específico para Murder Mystery 2"
+    Title = "Nc Hub - Murder Mystery 2",
+    Content = "Cargando script específico..."
 })
 
--- Detección de MM2
+-- Cargar MM2
 local placeId = game.PlaceId
 
 if placeId == 142823291 then
-    Rayfield:Notify({
-        Title = "MM2 Detectado",
-        Content = "Cargando features específicas...",
-        Duration = 5
-    })
-    
     local success, err = pcall(function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/May67-dev/NcHub/main/Games/MM2.lua"))()
     end)
     
     if not success then
-        Rayfield:Notify({Title = "Error MM2", Content = tostring(err), Duration = 8})
+        Rayfield:Notify({Title = "Error", Content = "No se pudo cargar MM2.lua\n" .. tostring(err), Duration = 8})
     end
 else
-    Rayfield:Notify({Title = "MM2", Content = "No estás en Murder Mystery 2", Duration = 4})
+    Rayfield:Notify({Title = "MM2", Content = "No estás en Murder Mystery 2", Duration = 5})
 end
 
 print("✅ Loader finalizado")
