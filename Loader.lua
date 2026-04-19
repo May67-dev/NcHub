@@ -1,4 +1,4 @@
--- Nc Hub Loader - Scripts Separados
+-- Nc Hub Loader - Scripts por Juego
 print("🔵 Nc Hub Loader iniciado...")
 
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
@@ -10,11 +10,10 @@ end
 
 _G.NcHubLoaded = true
 
--- Crear ventana principal
 local Window = Rayfield:CreateWindow({
     Name = "Nc Hub",
     LoadingTitle = "Nc Hub",
-    LoadingSubtitle = "Cargando scripts por juego...",
+    LoadingSubtitle = "Cargando script de MM2...",
     ConfigurationSaving = {
         Enabled = true,
         FolderName = "NcHubConfig",
@@ -25,35 +24,31 @@ local Window = Rayfield:CreateWindow({
 
 Rayfield:Notify({
     Title = "Nc Hub",
-    Content = "Loader iniciado correctamente",
+    Content = "Loader listo",
     Duration = 4
 })
 
--- ==================== TABS BASE ====================
 local TabHome = Window:CreateTab("🏠 Home", 4483362458)
 local TabUniversal = Window:CreateTab("🌐 Universal", 4483362458)
 local TabGames = Window:CreateTab("🎮 Games", 4483362458)
 
 TabHome:CreateParagraph({
     Title = "Nc Hub",
-    Content = "Sistema de scripts separados por juego\nElige el juego en la pestaña Games"
+    Content = "Scripts separados por juego\nActualmente en Murder Mystery 2"
 })
 
--- ==================== DETECCIÓN DE JUEGO ====================
+-- Detección de MM2
 local placeId = game.PlaceId
-local gameName = "Desconocido"
 
--- Aquí puedes añadir más juegos fácilmente
-if placeId == 2753915549 or placeId == 4442272183 or placeId == 7449423635 then
-    gameName = "Blox Fruits"
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/May67-dev/NcHub/main/Games/BloxFruits.lua"))()
-elseif placeId == 6284583030 then
-    gameName = "Pet Simulator 99"
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/May67-dev/NcHub/main/Games/PetSimulator.lua"))()
+if placeId == 142823291 then
+    Rayfield:Notify({Title = "MM2 Detectado", Content = "Cargando features específicas de Murder Mystery 2...", Duration = 5})
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/May67-dev/NcHub/main/Games/MM2.lua"))()
 else
-    gameName = "Juego no soportado todavía"
+    TabGames:CreateSection("Juego actual: No es MM2")
+    TabGames:CreateParagraph({
+        Title = "MM2 no detectado",
+        Content = "Este script es específico para Murder Mystery 2"
+    })
 end
 
-TabGames:CreateSection("Juego Detectado: " .. gameName)
-
-print("✅ Nc Hub cargado | Juego detectado: " .. gameName)
+print("✅ Nc Hub Loader completado")
