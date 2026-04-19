@@ -1,4 +1,4 @@
--- Nc Hub Loader - Versión Simple y Estable
+-- Nc Hub Loader - Versión Estable Final para MM2
 print("🔵 Nc Hub Loader iniciado...")
 
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
@@ -14,7 +14,7 @@ _G.NcHubRayfield = Rayfield
 local Window = Rayfield:CreateWindow({
     Name = "Nc Hub",
     LoadingTitle = "Nc Hub",
-    LoadingSubtitle = "Cargando MM2...",
+    LoadingSubtitle = "Cargando Murder Mystery 2...",
     ConfigurationSaving = {
         Enabled = true,
         FolderName = "NcHubConfig",
@@ -27,7 +27,7 @@ _G.NcHubWindow = Window
 
 Rayfield:Notify({
     Title = "Nc Hub",
-    Content = "Loader listo - MM2",
+    Content = "Loader cargado - Esperando MM2...",
     Duration = 4
 })
 
@@ -35,11 +35,13 @@ Rayfield:Notify({
 local TabHome = Window:CreateTab("🏠 Home", 4483362458)
 
 TabHome:CreateParagraph({
-    Title = "Nc Hub - Murder Mystery 2",
-    Content = "Cargando script específico..."
+    Title = "Nc Hub",
+    Content = "Script para Murder Mystery 2\nCargando features específicas..."
 })
 
--- Cargar MM2
+-- Cargar script de MM2 después de crear la ventana
+task.wait(1) -- Pequeña espera para asegurar que todo esté listo
+
 local placeId = game.PlaceId
 
 if placeId == 142823291 then
@@ -47,11 +49,13 @@ if placeId == 142823291 then
         loadstring(game:HttpGet("https://raw.githubusercontent.com/May67-dev/NcHub/main/Games/MM2.lua"))()
     end)
     
-    if not success then
-        Rayfield:Notify({Title = "Error", Content = "No se pudo cargar MM2.lua\n" .. tostring(err), Duration = 8})
+    if success then
+        Rayfield:Notify({Title = "MM2", Content = "Script de MM2 cargado correctamente", Duration = 5})
+    else
+        Rayfield:Notify({Title = "Error", Content = "Fallo al cargar MM2.lua\n" .. tostring(err), Duration = 8})
     end
 else
-    Rayfield:Notify({Title = "MM2", Content = "No estás en Murder Mystery 2", Duration = 5})
+    Rayfield:Notify({Title = "Error", Content = "No estás en Murder Mystery 2", Duration = 6})
 end
 
-print("✅ Loader finalizado")
+print("✅ Nc Hub Loader finalizado")
