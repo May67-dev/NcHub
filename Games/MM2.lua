@@ -1,23 +1,17 @@
--- Nc Hub - MM2 Script (Versión Diagnóstico)
-print("🔪 MM2 Script cargado")
+-- Nc Hub - MM2 Script (Versión Estable)
+print("🔪 MM2 Script iniciado")
 
 local Rayfield = _G.NcHubRayfield
 local Window = _G.NcHubWindow
 
 if not Window then
-    Rayfield:Notify({Title = "Error", Content = "No se encontró la ventana principal", Duration = 6})
+    Rayfield:Notify({Title = "Error", Content = "No se pudo encontrar la ventana de Nc Hub", Duration = 6})
     return
 end
 
--- Crear la pestaña MM2 directamente aquí
 local TabMM2 = Window:CreateTab("🔪 MM2", 4483362458)
 
-TabMM2:CreateSection("MM2 - Funciones Básicas")
-
-TabMM2:CreateParagraph({
-    Title = "¡Pestaña MM2 cargada!",
-    Content = "Si ves este mensaje, la pestaña se creó correctamente.\n\nWalkSpeed funciona.\nOtras funciones se añadirán."
-})
+TabMM2:CreateSection("Movement")
 
 TabMM2:CreateSlider({
     Name = "WalkSpeed",
@@ -32,4 +26,48 @@ TabMM2:CreateSlider({
     end,
 })
 
-print("✅ MM2 Script cargado - Pestaña creada")
+TabMM2:CreateButton({
+    Name = "Reset WalkSpeed",
+    Callback = function()
+        local char = game.Players.LocalPlayer.Character
+        if char and char:FindFirstChild("Humanoid") then
+            char.Humanoid.WalkSpeed = 16
+        end
+        Rayfield:Notify({Title = "MM2", Content = "WalkSpeed restaurado a 16", Duration = 3})
+    end,
+})
+
+TabMM2:CreateSection("Visuals")
+
+TabMM2:CreateToggle({
+    Name = "ESP Roles",
+    CurrentValue = false,
+    Callback = function(Value)
+        Rayfield:Notify({Title = "MM2", Content = "ESP Roles " .. (Value and "Activado" or "Desactivado") .. " (Próximamente)", Duration = 4})
+    end,
+})
+
+TabMM2:CreateToggle({
+    Name = "Gun ESP",
+    CurrentValue = false,
+    Callback = function(Value)
+        Rayfield:Notify({Title = "MM2", Content = "Gun ESP " .. (Value and "Activado" or "Desactivado"), Duration = 4})
+    end,
+})
+
+TabMM2:CreateSection("Combat")
+
+TabMM2:CreateToggle({
+    Name = "Aimbot Básico",
+    CurrentValue = false,
+    Callback = function(Value)
+        Rayfield:Notify({Title = "MM2", Content = "Aimbot " .. (Value and "Activado" or "Desactivado"), Duration = 4})
+    end,
+})
+
+TabMM2:CreateParagraph({
+    Title = "Estado",
+    Content = "WalkSpeed funcionando correctamente.\nOtras funciones en desarrollo."
+})
+
+print("✅ MM2 Script cargado correctamente")
